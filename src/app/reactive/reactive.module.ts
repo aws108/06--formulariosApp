@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveRoutingModule } from './reactive-routing.module';
-import { BasicosComponent } from './basicos/basicos.component';
-import { DinamicosComponent } from './dinamicos/dinamicos.component';
-import { SwitchesComponent } from './switches/switches.component';
+import { BasicPageComponent } from './pages/basic-page/basic-page.component';
+import { DynamicPageComponent } from './pages/dynamic-page/dynamic-page.component';
+import { SwitchesPageComponent } from './pages/switches-page/switches-page.component';
 
 
 @NgModule({
   declarations: [
-    BasicosComponent,
-    DinamicosComponent,
-    SwitchesComponent
+    BasicPageComponent,
+    DynamicPageComponent,
+    SwitchesPageComponent
   ],
   imports: [
     CommonModule,

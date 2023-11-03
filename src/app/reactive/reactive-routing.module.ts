@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BasicosComponent } from './basicos/basicos.component';
-import { DinamicosComponent } from './dinamicos/dinamicos.component';
-import { SwitchesComponent } from './switches/switches.component';
+import { BasicPageComponent } from './pages/basic-page/basic-page.component';
+import { DynamicPageComponent } from './pages/dynamic-page/dynamic-page.component';
+import { SwitchesPageComponent } from './pages/switches-page/switches-page.component';
 
 const routes: Routes = [
   {
     path: '',
-    children: [
-      {path: 'basicos', component: BasicosComponent},
-      {path: 'dinamicos', component: DinamicosComponent},
-      {path: 'switches', component: SwitchesComponent},
-      {path: '**', redirectTo: 'basicos'}
-    ] //1
+    children: [ //1
+      {path: 'basic', component: BasicPageComponent},
+      {path: 'dynamic', component: DynamicPageComponent},
+      {path: 'switches', component: SwitchesPageComponent},
+      {path: '**', redirectTo: 'basic'},
+    ] 
   }
 ];
 
