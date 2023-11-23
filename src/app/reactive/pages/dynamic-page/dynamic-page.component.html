@@ -1,13 +1,14 @@
 <h2>Reactivos: <small> Dinámicos </small></h2>
 <hr>
 
-<form autocomplete="off">
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off">
 
     <!-- Nombre -->
     <div class="mb-3 row">
         <label class="col-sm-3 col-form-label">Nombre</label>
         <div class="col-sm-9">
             <input class="form-control"
+                   formControlName="name"
                    placeholder="Nombre de la persona">
             <span class="form-text text-danger">
                    error message
@@ -37,12 +38,12 @@
     <!-- Lista de Juegos Favoritos -->
     <div class="mb-3 row">
         <label class="col-sm-3 col-form-label">Favoritos</label>
-        <div class="col-sm-9">
+        <div class="col-sm-9" formArrayName="favouriteGames"> <!--1-->
 
-            <div class="mb-1">
-
+            <!-- <div class="mb-1" *ngFor="favourite of favouriteGamesControls.controls">  --><!--Manera 1-->
+            <div class="mb-1" *ngFor="favourite of myForm.controls['favouriteGames'].value; let i = index">
                 <div class="input-group">
-                    <input class="form-control">
+                    <input [formControlName]="i" class="form-control">
 
                     <button class="btn btn-outline-danger"
                             type="button">
@@ -88,3 +89,8 @@
 <pre>{{ 'object' | json }}</pre>
 <pre>{{ 'object' | json }}</pre>
 
+<!--
+1-> formArrayName="favouriteGames" Aquí es donde irá el array o lista de juegos favoritos
+
+
+-->
