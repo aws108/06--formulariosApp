@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 # Explain
 
-Formularios reactivos con ejemplos de formularios básicos y dinámicos a nivel principiante.
+Formularios reactivos con ejemplos de formularios básicos y dinámicos a nivel principiante. Validaciones de formularios sencillos.
 
 ## Development server
 
