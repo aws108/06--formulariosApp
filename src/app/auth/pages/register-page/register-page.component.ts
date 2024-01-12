@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import * as customValidators from '../../../shared/validators/validators';
+
+import { ValidatorsService } from '../../../shared/service/validators.service';
+import { EmailValidatorService } from 'src/app/shared/validators/email-validator.service';
 
 @Component({
   templateUrl: './register-page.component.html',
@@ -7,24 +11,37 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class RegisterPageComponent {
 
   public myForm: FormGroup = this.fb.group({
-    name: ['', [Validators.required] ],
-    email: ['', [Validators.required] ],
-    username: ['', [Validators.required] ],
-    password: ['', [Validators.required, Validators.minLength(6)] ],
-    password2: ['', [Validators.required] ],
+    name: ['', [ Validators.required, Validators.pattern( this.validatorsService.firstNameAndLastnamePattern )  ]],
+    // email: ['', [ Validators.required, Validators.pattern( this.validatorsService.emailPattern )], [ new EmailValidatorService() ]],
+    // email: ['', [ Validators.required, Validators.pattern( this.validatorsService.emailPattern )]],
+    email: ['', [ Validators.required, Validators.pattern( this.validatorsService.emailPattern )], [ this.emailValidatorService ]], //1
+    username: ['', [ Validators.required, this.validatorsService.cantBeStrider ]],
+    // name: ['', [ Validators.required, Validators.pattern(customValidators.firstNameAndLastnamePattern) ]],
+    // email: ['', [ Validators.required, Validators.pattern(customValidators.emailPattern) ]],
+    // username: ['', [ Validators.required, customValidators.cantBeStrider ]], // se le está pasando la referencia a la función
+    password: ['', [ Validators.required, Validators.minLength(6) ]],
+    password2: ['', [ Validators.required ]],
+  }, {
+    validators: [
+      // this.validatorsService.isFieldOneEqualFieldTwo('password','password2')
+    ]
   });
 
-  constructor(private fb: FormBuilder){}
 
-  onSubmit(){
-    if (this.myForm.invalid){
-      this.myForm.markAllAsTouched();
-      return;
-    }
+  constructor(
+    private fb: FormBuilder,
+    private validatorsService: ValidatorsService,
+    private emailValidatorService: EmailValidatorService
+  ) {}
+
+  isValidField( field: string ) {
+    return this.validatorsService.isValidField( this.myForm, field ); // devolverá si hay un error
   }
 
-  isValidField(field: string): any{
-
- }
+  onSubmit() {
+    this.myForm.markAllAsTouched();
+  }
 
 }
+
+// 1-> Recuerda que esta estructura se hace porque el servicio aporta el lado asíncrono de la validación
