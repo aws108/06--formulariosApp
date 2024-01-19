@@ -6,15 +6,29 @@ import { Observable, delay, of } from 'rxjs';
 
 export class EmailValidatorService implements AsyncValidator{ // Manera 2: Asíncrono
     
-    validate(control: AbstractControl): Observable<ValidationErrors | null> {
-        const email = control.value;
-        return of ({ //2
-            emailTaken: true
-        }).pipe (
-            delay(2000) //retrasa la validación del formulario. Es una chapuza para crear una asincronía
-        )
-    }
+    // validate(control: AbstractControl): Observable<ValidationErrors | null> {
+    //     const email = control.value;
+    //     return of ({ //2
+    //         emailTaken: true
+    //     }).pipe (
+    //         delay(2000) //retrasa la validación del formulario. Es una chapuza para crear una asincronía
+    //     )
+    // }
 
+    validate(control: AbstractControl): Observable<ValidationErrors | null> { // valida el mail que metes en el form
+        const email = control.value;
+        const httpCallObservable = new Observable<ValidationErrors | null>((subscriber) => {
+            if (email === 'fernando@google.com') { // si metes este mail, te lo da por mal, porque ya está usado
+                subscriber.next({ emailTaken: true }); //emite un nuevo valor al subscribe
+                subscriber.complete(); // se desuscribe
+            }
+            subscriber.next(null);
+            subscriber.complete();
+        }).pipe(
+            delay(3000)
+        );
+        return httpCallObservable;
+    }
     
 }
 

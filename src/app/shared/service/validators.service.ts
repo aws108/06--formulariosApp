@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormControl, FormGroup, ValidationErrors } from "@angular/forms";
+import { AbstractControl, FormControl, FormGroup, ValidationErrors } from "@angular/forms";
 
 @Injectable({providedIn: 'root'})
 
@@ -25,4 +25,24 @@ export class ValidatorsService { // Manera síncrona. Opción 1
         return form.controls[field].errors && form.controls[field].touched
     }
 
+    isFieldOneEqualFieldTwo( field1: string, field2: string ) { //1
+        // return ( formGroup: FormGroup ): ValidationErrors | null => { //devuelve una función, que devuelve el formulario
+        return ( formGroup: AbstractControl ): ValidationErrors | null => { //devuelve una función, que devuelve el formulario
+          const fieldValue1 = formGroup.get(field1)?.value;
+          const fieldValue2 = formGroup.get(field2)?.value;
+
+          if ( fieldValue1 !== fieldValue2 ) {
+            formGroup.get(field2)?.setErrors({ notEqual: true }); //establece en el input el error
+            return { notEqual: true } // mostraré el formulario un error
+          }
+    
+          formGroup.get(field2)?.setErrors(null); // si son diferentes, limpias los errores
+          return null;
+        }
+    }
+
 }
+
+//1->  Cuando Angular ejecuta esta función de validación, automáticamente le pasa el FormGroup como el argumento formGroup. 
+//      Este objeto representa todo el formulario con sus controles.. Esto "ValidationErrors" lo devuelve asíncrono
+// Con AbstractControl puedes enviar el formGroup, formControl etc

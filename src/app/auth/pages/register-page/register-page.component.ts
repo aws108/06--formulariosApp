@@ -22,8 +22,8 @@ export class RegisterPageComponent {
     password: ['', [ Validators.required, Validators.minLength(6) ]],
     password2: ['', [ Validators.required ]],
   }, {
-    validators: [
-      // this.validatorsService.isFieldOneEqualFieldTwo('password','password2')
+    validators: [ // 2 
+      this.validatorsService.isFieldOneEqualFieldTwo('password','password2')
     ]
   });
 
@@ -45,3 +45,4 @@ export class RegisterPageComponent {
 }
 
 // 1-> Recuerda que esta estructura se hace porque el servicio aporta el lado asíncrono de la validación
+// 2-> Validar que las dos contraseñas sean iguales. Por aquí se pasará implícito todo el formulario. Tienes acceso al form y sus campos
